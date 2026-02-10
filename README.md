@@ -1,25 +1,116 @@
+<h1>SVG Tutorial: Scale, Size and Style for Beginners</h1>
+
+<h2>What will be covered in this post</h2>
+<ul>
+  <li>What is an SVG?</li>
+  <li>Common methods for using SVG ('img', inline, 'url', etc.)</li>
+  <li>How to control the size and scale of an SVG</li>
+  <li>What is 'viewBox'?</li>
+  <li>Common SVG elements, what they do, and how to use them
+    <ul>
+	  <li>Styles - 'fill', 'stroke'</li>
+      <li>Shapes - 'path, '&lt;circle&gt;', '&lt;line&gt;', '&lt;rect&gt;'</li>
+      <li>Structural - '&lt;svg&gt;', '&lt;g&gt;', '&lt;defs&gt;', '&lt;use&gt;'</li>
+      <li>Text - '&lt;text&gt;', '&lt;title&gt;'</li>
+      <li>Gradients - '&lt;linearGradient&gt;', '&lt;stop&gt;'</li>
+      <li>Animations (basic) - '&lt;animate&gt;'</li>
+	</ul>
+  <li>Some common questions
+    <ul>
+      <li>'&lt;svg&gt;' vs. '&lt;canvas&gt;'</li>
+      <li>Is SVG different than HTML?</li>
+    </ul>
+  </li>
+</ul>
+
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<h2>What we will not cover</h2>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ul>
+  <li>Advanced SVG animations</li>
+  <li>Advanced SVG elements such as '&lt;feBlend&gt;', '&lt;mask&gt;', and '&lt;polyline&gt;' (just to name a few)</li>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<h2>What is an SVG (Scalable Vector Graphic)?</h2>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<p>Before I answer that, here are some must-know, quick facts about SVGs:</p>
+<ul>
+  <li>They are an XML specification (see Is SVG the same as HTML?)</li>
+  <li>The current spec is 1.1, Version 2 and is maintained by the <a href="https://www.w3.org/Graphics/SVG/">
+  W3C SVG Working Group</a>
+    <ul>
+      <li><a href="https://www.w3.org/TR/2011/REC-SVG11-20110816/">1.1 Version 2 official spec document</a> (supported in all major browsers)</li>
+  	  <li><a href="https://www.w3.org/TR/2018/CR-SVG2-20181004/">SVG 2 official spec recommendation</a> (not supported yet)
+    </ul>
+  </li>
+  <li>If you ever need an "all-encompassing" guide to SVGs, check out <a href="https://css-tricks.com/lodge/svg/">Everything you need to know about SVG</a> from CSS Tricks which has a fairly comprehensive and friendly approach to the topic. <a href="https://developer.mozilla.org/en-US/docs/Web/SVG">MDN's Guide</a> is also a great resource.</li>
+  <li>Finally, here is the <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element">SVG reference documentation</a></li>
+</ul>
+
+<p>Don't want to read about SVGs for the next week of your life? In this post, I'm going to take the most practical and important aspects of SVG and break them down throughout this post. To start, let's ask the question again... What is an SVG?</p>
+
+<p>An SVG is an image built with math.</p>
+
+<p>Think of a 2-dimensional rectangle (that is an SVG below, check your dev-tools).</p>
+
+https://codepen.io/zg_dev/pen/MWxOMzb
+
+<p>This rectangle has a width of '300px' and a height of '80px'.
+
+<p>Now imagine that the top-left corner has coordinates of 'x=0, y=0'. How do we build this image 
+with math?</p>
+
+<p>A naive approach might be:</p>
+<ol type="1"
+  <li>Start at 0, 0</li>
+  <li>Draw a 2px black line from 0, 0 to width, 0</li>
+  <li>Draw a 2px black line from width, 0 to width, height</li>
+  <li>Draw a 2px black line from width, height to 0, height</li>
+  <li>Draw a 2px black line from 0, height to 0, 0</li>
+</ol>
+
+<p>While incredibly oversimplified, this is the basic concept of SVGs, and under the hood, here is the actual implementation of the rectangle above!</p>
+
+```
+<svg
+  viewBox="0 0 300 80"
+  width="300"
+  height="80"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M0 0 L300 0 L300 80 L0 80 L0 0 Z"
+    style="stroke-width: 2; stroke: black; fill: none;"
+  />
+</svg>
+```
+
+<p>Popular software like Adobe Illustrator and Inkscape use SVGs as their native file formats, and as you can imagine, SVGs can be infinitely complex (here's someone drawing an RV Van with SVGs)</p>
+
+<p>All major browsers support SVGs and they are the core of popular visualization libraries such as D3.js.<?p>
+
 <h2>Why use SVG?</h2>
 <p>SVG is a great choice of web graphic when the following things matter to you:</p>
 
 <ul>
   <li>You want the graphic to maintain clarity at all sizes</li>
   <li>You need a really small graphic (logo, icon, etc.)</li>
-  <li>You need a graphic with flexible sizing and you don't want to create many versions of the same file to
-      achieve this</li>
+  <li>You need a graphic with flexible sizing and you don't want to create many versions of the same 
+  file to achieve this</li>
   <li>You want advanced graphic colors and animations</li>
 </ul>
 
-<p>My rule of thumb is to use an SVG when a basic png or jpg graphic just won't cut it (sizing, clarity, animations, etc.).</p>
+<p>My rule of thumb is to use an SVG when a basic 'png' or 'jpg' graphic just won't cut it (sizing, clarity, animations, etc.).</p>
 
 <h3>5 ways to render SVGs in the browser</h3>
+
 <p>So... How do you use SVGs?</p>
 
-<ol>
-  <li>1. HTML img element - easy to use and fully responsive (very common usage)</li>
-  <li>2. HTML iframe element - generally, iframes should be for embedding external webpages (not SVGs), so at the risk of getting yelled at by someone more knowledgeable on this subject, I don't see any use-case for iframe + SVG</li>
-  <li>3. HTML embed and object elements - I would not recommend either of these as they are outdated with better alternatives. There is one arguable use case for object though, which is a PDF embed.</li>
-  <li>4. CSS url - great for setting backgrounds, custom bullet point icons, and site logos inside an a tag</li>
-  <li>5. Inline SVG element - great for when you want full control of the SVG (scaling, colors, animations, etc.)</li>
+<ol type="1">
+  <li>HTML 'img' element - easy to use and fully responsive (very common usage)</li>
+  <li>HTML 'iframe' element - generally, iframes should be for embedding external webpages (not SVGs), so at the risk of getting yelled at by someone more knowledgeable on this subject, I don't see any use-case for 'iframe' + 'SVG'</li>
+  <li>HTML 'embed' and 'object' elements - I would not recommend either of these as they are outdated with better alternatives. There is one arguable use case for 'object' though, which is a PDF embed.</li>
+  <li>CSS 'url' - great for setting backgrounds, custom bullet point icons, and site logos inside an a tag</li>
+  <li>Inline SVG element - great for when you want full control of the SVG (scaling, colors, animations, etc.)</li>
 </ol>
 
 <p>Below is a Codepen with examples of each usage.</p>
