@@ -1,36 +1,37 @@
-# svg
-SVG - Scalable Vector Graphics. Beginner's guide. From S to V.
+<h2>Why use SVG?</h2>
+<p>SVG is a great choice of web graphic when the following things matter to you:</p>
 
-Why use SVG?
-SVG is a great choice of web graphic when the following things matter to you:
+<ul>
+  <li>You want the graphic to maintain clarity at all sizes</li>
+  <li>You need a really small graphic (logo, icon, etc.)</li>
+  <li>You need a graphic with flexible sizing and you don't want to create many versions of the same file to
+      achieve this</li>
+  <li>You want advanced graphic colors and animations</li>
+</ul>
 
-	- You want the graphic to maintain clarity at all sizes
-	- You need a really small graphic (logo, icon, etc.)
-	- You need a graphic with flexible sizing and you don't want to create many versions of the same file to
-      achieve this
-	- You want advanced graphic colors and animations
+<p>My rule of thumb is to use an SVG when a basic png or jpg graphic just won't cut it (sizing, clarity, animations, etc.).</p>
 
-My rule of thumb is to use an SVG when a basic png or jpg graphic just won't cut it (sizing, clarity, animations, etc.).
+<h3>5 ways to render SVGs in the browser</h3>
+<p>So... How do you use SVGs?</p>
 
-5 ways to render SVGs in the browser
-So... How do you use SVGs?
+<ol>
+  <li>1. HTML img element - easy to use and fully responsive (very common usage)</li>
+  <li>2. HTML iframe element - generally, iframes should be for embedding external webpages (not SVGs), so at the risk of getting yelled at by someone more knowledgeable on this subject, I don't see any use-case for iframe + SVG</li>
+  <li>3. HTML embed and object elements - I would not recommend either of these as they are outdated with better alternatives. There is one arguable use case for object though, which is a PDF embed.</li>
+  <li>4. CSS url - great for setting backgrounds, custom bullet point icons, and site logos inside an a tag</li>
+  <li>5. Inline SVG element - great for when you want full control of the SVG (scaling, colors, animations, etc.)</li>
+</ol>
 
-	1. HTML img element - easy to use and fully responsive (very common usage)
-	2. HTML iframe element - generally, iframes should be for embedding external webpages (not SVGs), so at the risk of getting yelled at by someone more knowledgeable on this subject, I don't see any use-case for iframe + SVG
-	3. HTML embed and object elements - I would not recommend either of these as they are outdated with better alternatives. There is one arguable use case for object though, which is a PDF embed.
-	4. CSS url - great for setting backgrounds, custom bullet point icons, and site logos inside an a tag
-	5. Inline SVG element - great for when you want full control of the SVG (scaling, colors, animations, etc.)
+<p>Below is a Codepen with examples of each usage.</p>
+<a href="https://codepen.io/zg_dev/pen/mdLPGLO">Codepen.io</a>
 
-Below is a Codepen with examples of each usage.
-https://codepen.io/zg_dev/pen/mdLPGLO
+<p>Note: when inserting a raw SVG element into HTML, you must provide a namespace equal to xmlns=&quot;http://www.w3.org/2000/svg&quot;. This ensures that when different dialects of XML (what SVG is uses) are used within a single HTML document, there are no clashes between tags. For example, both MathML and the SVG spec support a <title> tag. Without this namespace, the browser wouldn't know which tag to use!</p>
 
-Note: when inserting a raw SVG element into HTML, you must provide a namespace equal to xmlns=&quot;http://www.w3.org/2000/svg&quot;. This ensures that when different dialects of XML (what SVG is uses) are used within a single HTML document, there are no clashes between tags. For example, both MathML and the SVG spec support a <title> tag. Without this namespace, the browser wouldn't know which tag to use!
+<h3>How to control the size and scale of an SVG</h3>
+<p>Scaling SVGs depends on how you render it in the DOM. While we saw many methods for doing this, for the remainder of this post, we'll be focusing on the inline and img usage of SVGs as they are the most practical and common ways to use SVG.</p>
 
-How to control the size and scale of an SVG
-Scaling SVGs depends on how you render it in the DOM. While we saw many methods for doing this, for the remainder of this post, we'll be focusing on the inline and img usage of SVGs as they are the most practical and common ways to use SVG.
-
-Scaling an Image SVG
-If you want a fast and easy way to responsively scale an SVG, use an img tag and set a width on it.
+<h4>Scaling an Image SVG</h4>
+<p>If you want a fast and easy way to responsively scale an SVG, use an img tag and set a width on it.</p>
 
 ```
 <!-- This SVG will scale to 200px and maintain its aspect ratio and clarity -->
@@ -41,33 +42,37 @@ If you want a fast and easy way to responsively scale an SVG, use an img tag and
 <img src="some-graphic.svg" style="width: 200px;" />
 ```
 
-Here are some considerations to this approach:
+<h5>Here are some considerations to this approach:</h5>
 
-By using img, you get the benefit of image caching
-By using img, you lose the ability to style and animate the SVG
-Note: the SVG file you reference must have either dimensions already set or the viewBox attribute set. If none of these are present, the SVG will be a fixed size and will not scale with the image size. We will talk more about these attributes in subsequent sections.
+<ol>
+  <li>By using img, you get the benefit of image caching</li>
+  <li>By using img, you lose the ability to style and animate the SVG</li>
+</ol>
+<p>Note: the SVG file you reference must have either dimensions already set or the viewBox attribute set. If none of these are present, the SVG will be a fixed size and will not scale with the image size. We will talk more about these attributes in subsequent sections.</p>
 
-What is an SVG "Viewport"?
-One of the most important concepts to understand with SVG is the viewport.
+<h3>What is an SVG "Viewport"?</h3>
+<p>One of the most important concepts to understand with SVG is the viewport.</p>
 
-You can think of this as the "lens" or "portal" that you are viewing the actual SVG from. Below, I have created 2 SVG graphics and have put a gray border on the "viewport". The SVG is exactly the same in both, but as you can see, the viewport is 48px x 32px in the left image and 64px x 64px in the right image.
+<p>You can think of this as the "lens" or "portal" that you are viewing the actual SVG from. Below, I have created 2 SVG graphics and have put a gray border on the "viewport". The SVG is exactly the same in both, but as you can see, the viewport is 48px x 32px in the left image and 64px x 64px in the right image.</p>
 
-Even though the SVG is the same, the left image appears to be cropped because the "lens" / "portal" / "viewport" that we're looking through is smaller than the actual SVG.
+<p>Even though the SVG is the same, the left image appears to be cropped because the "lens" / "portal" / "viewport" that we're looking through is smaller than the actual SVG.</p>
 
-Go ahead, drag the bottom right corner of both and see what happens.
+<p>Go ahead, drag the bottom right corner of both and see what happens.</p>
 
-https://codesandbox.io/p/sandbox/compassionate-butterfly-6gfty5?file=%2Fsrc%2FApp.tsx&from-embed
+<p><a href="https://codesandbox.io/p/sandbox/compassionate-butterfly-6gfty5?file=%2Fsrc%2FApp.tsx&from-embed">CodeSandbox Example</a></p>
 
-Think of this like an airplane window. Does the sky still exist when the window is closed? Of course! You just have to open it wider to see the sky.
+<p>Think of this like an airplane window. Does the sky still exist when the window is closed? Of course! You just have to open it wider to see the sky.</p>
 
-An analogy to remember:
+<h4>An analogy to remember:</h4>
+<ul>
+  <li>Plane Window = SVG Viewport</li>
+  <li>Sky = SVG contents</li>
+</ol>
 
-Plane Window = SVG Viewport
-Sky = SVG contents
-Note: did you notice what happened to the SVG size when you changed the size of the viewport? It stayed the same... We'll talk about ways to scale the SVG as its viewport size changes later in this post.
+<p>Note: did you notice what happened to the SVG size when you changed the size of the viewport? It stayed the same... We'll talk about ways to scale the SVG as its viewport size changes later in this post.</p>
 
-How to adjust the SVG viewport size
-There are several ways to set the viewport of an SVG:
+<h3>How to adjust the SVG viewport size</h3>
+<p>There are several ways to set the viewport of an SVG:</p>
 
 ```
 <!-- Use the default (this will either be 350 x 150 or the full width of the container depending on the browser and render method) -->
@@ -80,41 +85,46 @@ There are several ways to set the viewport of an SVG:
 <svg style="width: 200px; height: 200px;" />
 ```
 
-How SVG View Box works
-If the SVG viewport defines the size in pixels of that proverbial "window" / "portal" / "lens" that we are viewing the SVG from, then what does viewBox do?
+<h3>How SVG View Box works</h3>
+<p>If the SVG viewport defines the size in pixels of that proverbial "window" / "portal" / "lens" that we are viewing the SVG from, then what does viewBox do?</p>
 
-It sounds awfully similar to "viewport" doesn't it? There are hundreds of tutorials about this stuff online and many of them try to visualize this concept. I personally find these explanations confusing and misdirected in some cases because what viewBox really does is two things, and both are mathematical by nature:
+<p>It sounds awfully similar to "viewport" doesn't it? There are hundreds of tutorials about this stuff online and many of them try to visualize this concept. I personally find these explanations confusing and misdirected in some cases because what viewBox really does is two things, and both are mathematical by nature:</p>
 
-It mathematically links or "maps" the viewport pixels to internal "units"
-It defines the aspect ratio of the SVG
-The viewBox attribute accepts 4 parameters, defined as viewBox=&quot;min-x min-y width height&quot;:
+<ol>
+  <li>It mathematically links or "maps" the viewport pixels to internal "units"</li>
+  <li>It defines the aspect ratio of the SVG</li>
+</ol>
+<p>The viewBox attribute accepts 4 parameters, defined as viewBox=&quot;min-x min-y width height&quot;:</p>
+<ol>
+  <li>min-x - the X origin coordinate of the view box</li>
+  <li>min-y - the Y origin coordinate of the view box</li>
+  <li>width - the width of the SVG (internal units)</li>
+  <li>height - the height of the SVG (internal units)</li>
+</ol>
 
-min-x - the X origin coordinate of the view box
-min-y - the Y origin coordinate of the view box
-width - the width of the SVG (internal units)
-height - the height of the SVG (internal units)
-So what are these "internal units"? You might see them defined as "user space units" in official documentation, but I don't find this concept very intuitive. Let's look at the mathematical relationship between SVG viewport and SVG viewBox with a simple example:
-
+<p>So what are these "internal units"? You might see them defined as "user space units" in official documentation, but I don't find this concept very intuitive. Let's look at the mathematical relationship between SVG viewport and SVG viewBox with a simple example:</p>
 
 ```
 <svg width="200px" height="100px" viewBox="0 0 200 100" />
 ```
 
-This is what I call the "base case" because both the absolute size and the aspect ratio are the same between the viewport and the view box.
+<p>This is what I call the "base case" because both the absolute size and the aspect ratio are the same between the viewport and the view box.</p>
+<ul>
+  <li>Viewport aspect ratio is 200px / 100px = 2:1</li>
+  <li>viewBox aspect ratio is 200 units / 100 units = 2:1</li>
+</ul>
+<p>Let's start with min-x and min-y because these are relatively easy. If you created an X/Y coordinate system on your viewport, the min-x and min-y values say, "the SVG internal coordinate system will start at these values relative to the browser (viewport) coordinate system."</p>
 
-Viewport aspect ratio is 200px / 100px = 2:1
-viewBox aspect ratio is 200 units / 100 units = 2:1
-Let's start with min-x and min-y because these are relatively easy. If you created an X/Y coordinate system on your viewport, the min-x and min-y values say, "the SVG internal coordinate system will start at these values relative to the browser (viewport) coordinate system."
+<p>The more challenging values are width and height because they are a mapping of values from "browser space" (viewport width and height) to "user space" (internal SVG width and height). Remember, SVGs are "graphics made by math", so in order to infinitely scale their size, we need to have a "mapping" from non-infinitely-scalable browser pixels to infinitely scalable SVG "units".</p>
 
-The more challenging values are width and height because they are a mapping of values from "browser space" (viewport width and height) to "user space" (internal SVG width and height). Remember, SVGs are "graphics made by math", so in order to infinitely scale their size, we need to have a "mapping" from non-infinitely-scalable browser pixels to infinitely scalable SVG "units".
-
-To map pixels to "units", we simply use the formula:
-
+<p>To map pixels to "units", we simply use the formula:</p>
+<blockquote>
 viewport dimension / viewBox dimension = internal px / unit
+</blockquote>
 
-In this case, the viewport width is 200px divided by the viewBox width of 200units = 1px / unit. So we can say that for every viewport pixel, there will be one internal SVG pixel, and therefore, our "zoom" level is 100%.
+<p>In this case, the viewport width is 200px divided by the viewBox width of 200units = 1px / unit. So we can say that for every viewport pixel, there will be one internal SVG pixel, and therefore, our "zoom" level is 100%.</p>
 
-So what is this "base case" example telling us? Let's look at a simple ellipse SVG and walk through how each viewBox property is affecting the final result.
+<p>So what is this "base case" example telling us? Let's look at a simple ellipse SVG and walk through how each viewBox property is affecting the final result.</p>
 
 View Box Example - Rectangle
 Take a look at the following SVG:
@@ -485,5 +495,4 @@ Is SVG the same as HTML?
 No, SVGs are created with XML, which is similar looking to HTML, but without pre-defined tags such as h1, a, or p tags, and the syntax is case-sensitive (unlike HTML). The user creates arbitrarily named tags and uses this to represent structured data such as SVGs.
 
 In other words, an SVG is an implementation, or dialect of XML that defines arbitrary shapes that have been covered in this post (e.g. rect, g, circle, etc.). width="320" height="150" -->
-
 
